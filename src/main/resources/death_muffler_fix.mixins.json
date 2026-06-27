@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "Barbatosishere.death_muffler_fix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [],
+  "client": [
+    "BossBarHidingEventMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

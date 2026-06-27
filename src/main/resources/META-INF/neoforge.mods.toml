@@ -1,0 +1,30 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "death_muffler_fix"
+version = "1.0.0"
+displayName = "Death Muffler fix"
+logoFile = "logo.png"
+credits = "Barbatosishere"
+authors = "Barbatosishere"
+description = "修复实用设备消声机的Boss血条隐藏逻辑（改用语言系统名称匹配）"
+
+[[mixins]]
+config = "death_muffler_fix.mixins.json"
+
+[[dependencies.death_muffler_fix]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.death_muffler_fix]]
+modId = "mob_grinding_utils"
+type = "required"
+versionRange = "[1.1.10,)"
+ordering = "AFTER"
+side = "CLIENT"
+
