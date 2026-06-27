@@ -34,10 +34,6 @@ authors = "${mod_authors}" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description = '''${mod_description}'''
 
-# The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
-[[mixins]]
-config = "${mod_id}.mixins.json"
-
 # The [[accessTransformers]] block allows you to declare where your AT file is.
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg
 #[[accessTransformers]]
@@ -77,3 +73,11 @@ side = "BOTH"
 # stop your mod loading on the server for example.
 #[features."${mod_id}"]
 #openGLVersion="[3.2,)"
+
+# MGU 兼容性依赖（可选，通过 Mixin 修复 MGU 的构建 bug）
+[[dependencies."${mod_id}"]]
+modId = "mob_grinding_utils"
+type = "optional"
+versionRange = "[1.1.10,)"
+ordering = "NONE"
+side = "CLIENT"

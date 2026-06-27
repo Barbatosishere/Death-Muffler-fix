@@ -36,6 +36,8 @@ repositories {
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    compileOnly 'mob_grinding_utils:mob_grinding_utils:1.1.10'
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -45,8 +47,8 @@ tasks.withType(JavaCompile).configureEach {
 tasks.named('jar', Jar) {
     manifest {
         attributes([
-                "MixinConfigs": "death_muffler_fix.mixins.json",
-                "Automatic-Module-Name": "death_muffler_fix"
+                "Automatic-Module-Name": "death_muffler_fix",
+                "MixinConfigs": "death_muffler_fix.mixins.json"
         ])
     }
 }

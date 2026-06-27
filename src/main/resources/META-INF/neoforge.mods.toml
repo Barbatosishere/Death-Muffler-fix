@@ -11,9 +11,6 @@ credits = "Barbatosishere"
 authors = "Barbatosishere"
 description = "修复实用设备消声机的Boss血条隐藏逻辑（改用语言系统名称匹配）"
 
-[[mixins]]
-config = "death_muffler_fix.mixins.json"
-
 [[dependencies.death_muffler_fix]]
 modId = "neoforge"
 type = "required"
@@ -23,8 +20,8 @@ side = "BOTH"
 
 [[dependencies.death_muffler_fix]]
 modId = "mob_grinding_utils"
-type = "required"
+type = "optional"
 versionRange = "[1.1.10,)"
-ordering = "AFTER"
+ordering = "NONE"
 side = "CLIENT"
 

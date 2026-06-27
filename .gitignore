@@ -19,3 +19,12 @@ hs_err_pid*
 
 # Common working directory
 run
+runs/
+
+# Temp directories
+mgu_temp/
+i18n_temp/
+META-INF/
+
+# Compile-only libs
+libs/
