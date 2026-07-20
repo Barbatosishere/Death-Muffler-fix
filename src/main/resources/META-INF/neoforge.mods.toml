@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
-license = "All Rights Reserved"
+license = "GPL-3.0"
 
 [[mods]]
 modId = "death_muffler_fix"
