@@ -10,13 +10,11 @@ All notable changes to Death Muffler Fix will be documented in this file.
 
 #### Fixed
 
-- **1.21.1 (NeoForge)**: Replaced Mixin-based workaround with a shim class approach. The missing `BossBarHidingEvent` (only `.java` source was shipped in MUG 1.1.10, no compiled `.class`) is now provided as a same-package shim compiled into this mod's jar. MUG's `doClientStuff()` runs to completion — boss bar hiding, `worldUnload` listener, XP fluid render layers, and color handler registration all work as originally intended.
-  - **Previous approach bug**: The old Mixin cancelled `doClientStuff()` before `new BossBarHidingEvent()`, which also skipped the `worldUnload` event registration (responsible for clearing cached `SPIKE_DAMAGE` on world change). This cache invalidation logic was not compensated, causing stale damage data after dimension switches.
-  - Removed `DoClientStuffMixin.java`, `ClientHandler.java`, and `death_muffler_fix.mixins.json` — no longer needed.
-  - `Death_muffler_fix.java` simplified to a minimal `@Mod` entry point.
+- **1.21.1 (NeoForge)**: Completed the Mixin-based fix for the missing `BossBarHidingEvent` (only `.java` source was shipped in MUG 1.1.10, no compiled `.class`). The Mixin cancels `doClientStuff()` right before the `new BossBarHidingEvent()` instruction; boss bar hiding is reimplemented with a language-aware listener.
+  - **worldUnload compensation**: Cancelling `doClientStuff()` also skipped the `worldUnload` event registration (responsible for clearing the cached `SPIKE_DAMAGE` on world change). This mod now registers its own `LevelEvent.Unload` listener that clears MUG's private static `SPIKE_DAMAGE` via reflection, restoring original behavior.
+  - **Shim approach rejected**: A same-package shim class (`mob_grinding_utils.events.BossBarHidingEvent`) was attempted first, but NeoForge 1.21.1's JPMS module layer rejects split packages between mod jars (`ResolutionException: Modules mob_grinding_utils and death_muffler_fix export package mob_grinding_utils.events`), so the Mixin approach is kept.
 
 - **1.21.1 (NeoForge)**: Fixed dependency declaration for Mob Grinding Utils — changed from `optional` to `required` in `neoforge.mods.toml`. The mod imports MUG classes at load time and cannot function without it; the previous `optional` declaration would crash on missing MUG, contradicting the declared intent.
-  - Removed `[[mixins]]` block from `neoforge.mods.toml` (no more mixins).
 
 - **1.20.1 (Forge)**: Fixed dependency declaration — changed `type = "optional"` to `mandatory = true` in `mods.toml`. The original `type` field is not recognized by Forge 1.20.1's TOML parser (required field: `mandatory`), which caused the mod to be rejected as an invalid mod file entirely.
   - Also fixed the `forge` dependency entry to use the correct `mandatory = true` syntax.
@@ -32,7 +30,7 @@ All notable changes to Death Muffler Fix will be documented in this file.
 
 #### Changed
 
-- Updated `README.md` to reflect the new 1.21.1 shim class approach.
+- Updated `README.md` to reflect the final 1.21.1 approach (Mixin + worldUnload compensation; shim rejected due to JPMS split-package restriction).
 
 ---
 
@@ -40,13 +38,11 @@ All notable changes to Death Muffler Fix will be documented in this file.
 
 #### 修复
 
-- **1.21.1（NeoForge）**：将基于 Mixin 的变通方案替换为 shim 补类方案。MUG 1.1.10 发布的 jar 中 `BossBarHidingEvent` 只有 `.java` 源文件、没有编译 `.class`，导致客户端启动崩溃。现在将该缺失类以同包同名 shim 的形式编译进本模组 jar，MUG 的 `doClientStuff()` 完整执行——Boss 血条隐藏、`worldUnload` 监听（切换世界时清空 `SPIKE_DAMAGE` 缓存）、XP 流体渲染层、颜色处理器注册全部按原逻辑生效。
-  - **原方案缺陷**：旧版 Mixin 在 `new BossBarHidingEvent()` 前取消了 `doClientStuff()` 方法，但同时跳过了 `worldUnload` 事件注册（负责在切换世界时清空缓存的 `SPIKE_DAMAGE`），该缓存失效逻辑未被补偿，导致跨维度后伤害数据陈旧。
-  - 已移除 `DoClientStuffMixin.java`、`ClientHandler.java` 和 `death_muffler_fix.mixins.json`——不再需要。
-  - `Death_muffler_fix.java` 精简为最小 `@Mod` 入口。
+- **1.21.1（NeoForge）**：完善基于 Mixin 的缺失类修复。MUG 1.1.10 发布的 jar 中 `BossBarHidingEvent` 只有 `.java` 源文件、没有编译 `.class`，导致客户端启动崩溃。Mixin 在 `new BossBarHidingEvent()` 指令前取消 `doClientStuff()`，血条隐藏由语言感知的监听器重新实现。
+  - **worldUnload 补偿**：取消 `doClientStuff()` 同时跳过了 `worldUnload` 事件注册（负责在切换世界时清空缓存的 `SPIKE_DAMAGE`）。本模组现注册自己的 `LevelEvent.Unload` 监听器，经反射清空 MUG 的私有静态字段 `SPIKE_DAMAGE`，恢复原版行为。
+  - **shim 方案弃用**：最初尝试同包同名 shim 补类（`mob_grinding_utils.events.BossBarHidingEvent`），但 NeoForge 1.21.1 的 JPMS 模块层禁止模组 jar 间拆分包（`ResolutionException: Modules mob_grinding_utils and death_muffler_fix export package mob_grinding_utils.events`），故保留 Mixin 方案。
 
 - **1.21.1（NeoForge）**：修复 Mob Grinding Utils 依赖声明——在 `neoforge.mods.toml` 中将 `optional` 改为 `required`。本模组在加载时引用 MUG 类，未安装 MUG 时无法运行；原 `optional` 声明与实际行为矛盾（缺 MUG 时直接崩溃）。
-  - 已移除 `[[mixins]]` 块（不再使用 Mixin）。
 
 - **1.20.1（Forge）**：修复依赖声明——在 `mods.toml` 中将 `type = "optional"` 改为 `mandatory = true`。Forge 1.20.1 的 TOML 解析器不识别 `type` 字段（必需字段为 `mandatory`），导致模组被标记为无效文件、完全无法加载。
   - 同时修正了 `forge` 依赖条目，使用正确的 `mandatory = true` 语法。
@@ -62,4 +58,4 @@ All notable changes to Death Muffler Fix will be documented in this file.
 
 #### 变更
 
-- 更新 `README.md` 中 1.21.1 修复方式描述，反映新的 shim 补类方案。
+- 更新 `README.md` 中 1.21.1 修复方式描述（Mixin + worldUnload 补偿；shim 方案因 JPMS 拆分包限制弃用）。

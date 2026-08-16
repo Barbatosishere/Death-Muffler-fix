@@ -16,7 +16,7 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 
 | MC Version | Approach |
 |---|---|
-| **1.21.1** | Ships a **shim class** (`mob_grinding_utils.events.BossBarHidingEvent`) compiled into this mod's jar, filling the missing bytecode in MUG 1.1.10. MUG's `doClientStuff()` then runs to completion — boss bar hiding, world unload cleanup, XP fluid render layers, and color handlers all work as originally intended. No Mixin or logic patching needed. |
+| **1.21.1** | Uses a **Mixin** to cancel `doClientStuff()` right before the `new BossBarHidingEvent()` instruction (the 3 event registrations before it are unaffected), then re-registers the skipped tail logic (XP fluid render layers, color handlers, `worldUnload` damage-cache invalidation via reflection) and reimplements boss bar hiding with a language-aware listener. (A same-package shim class was attempted first, but NeoForge 1.21.1's JPMS module layer rejects split packages between mods.) |
 | **1.20.1 / 1.12.x** | Registers an additional event listener that uses Minecraft's **localization system** (`I18n`) to match boss names. This supplements MUG's existing listener (which remains active for its extra logic like Wither Crumbs detection), so there is no conflict. |
 
 ## Features
@@ -37,7 +37,7 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 
 ## Notes
 
-- For 1.21.1: If MUG releases a future version that includes the compiled `BossBarHidingEvent` class, both jars will contain the same class. Since the implementations are identical, this causes no conflict.
+- For 1.21.1: The Mixin injection point is the `new BossBarHidingEvent()` instruction; if a future MUG release fixes `doClientStuff()` and the injection point disappears, this mod will fail fast at startup rather than crash obscurely.
 - This mod requires Mob Grinding Utils to be installed. It will not load without it.
 
 ---
@@ -60,7 +60,7 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 
 | MC 版本 | 方式 |
 |---|---|
-| **1.21.1** | 在本模组 jar 中编译了一份**同包同名 shim 类**（`mob_grinding_utils.events.BossBarHidingEvent`），补齐 MUG 1.1.10 中缺失的字节码。MUG 的 `doClientStuff()` 从此可以完整执行——Boss 血条隐藏、世界卸载清理、XP 流体渲染层、颜色处理器全部按原逻辑生效，无需 Mixin 或逻辑补偿。 |
+| **1.21.1** | 通过 **Mixin** 在 `new BossBarHidingEvent()` 指令前终止 `doClientStuff()`（其前段 3 个事件注册不受影响），随后补注册被跳过的尾部逻辑（XP 流体渲染层、颜色处理器、经反射实现的 `worldUnload` 伤害缓存失效），并以语言感知的监听器重新实现血条隐藏。（最初尝试同包同名 shim 补类，但 NeoForge 1.21.1 的 JPMS 模块层禁止模组间拆分包而无法采用。） |
 | **1.20.1 / 1.12.x** | 注册一个额外的事件监听器，使用 Minecraft 的**语言系统**（`I18n`）进行 Boss 名称匹配。该监听器与 MUG 原版监听器叠加共存（原版仍保留其额外逻辑，如 Wither Crumbs 检测），互不冲突。 |
 
 ## 功能特性
@@ -81,5 +81,5 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 
 ## 说明
 
-- 1.21.1 版本：若 MUG 后续更新补全了 `BossBarHidingEvent` 的编译类，两个 jar 中将出现同名类。由于实现完全一致，不会产生冲突。
+- 1.21.1 版本：Mixin 注入点为 `new BossBarHidingEvent()` 指令；若 MUG 后续版本修复了 `doClientStuff()` 导致注入点消失，本模组会在启动时立即报错（fail-fast），而非晦涩崩溃。
 - 本模组依赖实用设备（Mob Grinding Utils），未安装时将无法加载。
