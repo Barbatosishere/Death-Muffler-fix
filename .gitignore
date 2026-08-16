@@ -28,3 +28,6 @@ i18n_temp/
 
 # Compile-only libs
 libs/
+
+# ZCode session data
+.zcode/
