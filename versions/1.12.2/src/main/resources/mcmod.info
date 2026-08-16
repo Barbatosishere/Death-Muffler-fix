@@ -4,7 +4,7 @@
     "name": "Death Muffler fix",
     "description": "修复实用设备消声机的Boss血条隐藏逻辑（1.12.2 兼容入口）",
     "version": "1.0.0",
-    "mcversion": "1.12.2",
+    "mcversion": "1.12.x",
     "url": "",
     "updateUrl": "",
     "authorList": ["Barbatosishere"],
@@ -15,7 +15,7 @@
       {
         "modid": "forge",
         "mandatory": true,
-        "versionRange": "[14.23.5.2847,)",
+        "versionRange": "[14.21,)",
         "ordering": "NONE",
         "side": "BOTH"
       },

@@ -9,14 +9,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Death Muffler Fix 主类（Forge 1.12.2）。
+ * Death Muffler Fix 主类（Forge 1.12.x：1.12 / 1.12.1 / 1.12.2，构建工具链为 1.12.2）。
  *
  * MUG 0.3.13 的 BossBarHidingEvent 编译完整、原生血条隐藏功能可用，
  * 但其按硬编码 Boss 名 "Wither"/"Ender Dragon" 匹配，非英文环境
  * 失效。本模组注册语言系统名称匹配的客户端监听器（叠加式增强，
  * 与原版监听互不冲突，见 ClientHandler）。
  */
-@Mod(modid = Death_muffler_fix.MOD_ID, version = Death_muffler_fix.VERSION, useMetadata = true)
+@Mod(modid = Death_muffler_fix.MOD_ID, version = Death_muffler_fix.VERSION, useMetadata = true,
+        acceptedMinecraftVersions = "[1.12,1.13)")
 public final class Death_muffler_fix {
     public static final String MOD_ID = "death_muffler_fix";
     public static final String VERSION = "1.0.0";

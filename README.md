@@ -8,7 +8,7 @@ Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各�
 
 - **1.21.1（MUG 1.1.10）**：`BossBarHidingEvent` 类构建缺失（jar 中只有 .java 没有 .class），客户端初始化即崩溃。本模组将缺失类以同包同名 shim 的形式编译进自身 jar 补齐字节码，MGU 的 `doClientStuff()` 完整执行（血条隐藏、worldUnload、XP 流体渲染层、颜色处理器全部按原逻辑生效）。
 - **1.20.1（MUG 1.1.0）**：原生功能可用，但按硬编码英文 Boss 名匹配，非英文环境失效。本模组提供语言系统名称匹配的增强实现。
-- **1.12.2（MUG 0.3.13）**：原生功能可用，但同样按硬编码英文 Boss 名匹配，非英文环境失效。本模组提供语言系统名称匹配的增强实现（与原版监听叠加）。
+- **1.12.x（MUG 0.3.13）**：原生功能可用，但同样按硬编码英文 Boss 名匹配，非英文环境失效。本模组提供语言系统名称匹配的增强实现（与原版监听叠加）。
 
 ## 功能特性
 
@@ -29,7 +29,7 @@ Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各�
 ├── src/main/resources/       # 共享资源（logo.png、lang 等，Stonecutter 自动合并）
 ├── libs/                     # 各版本 MUG jar（flatDir 本地依赖）
 └── versions/
-    ├── 1.12.2/               # platform=rfg，Java 21 编译 / Java 8 目标
+    ├── 1.12.2/               # platform=rfg，Java 21 编译 / Java 8 目标（构建工具链 1.12.2，产物兼容整个 1.12.x）
     ├── 1.20.1/               # platform=legacyforge，Java 17
     └── 1.21.1/               # platform=neoforge，Java 21
 ```
@@ -40,7 +40,7 @@ Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各�
 |------|--------|-----|------|
 | 1.21.1 | NeoForge 21.1.230+ | 1.1.10+ | 21 |
 | 1.20.1 | Forge 47.1.106+ | 1.1.0+ | 17 |
-| 1.12.2 | Forge 14.23.5.2847+ | 0.3.13+ | 8（运行）/ 21（构建） |
+| 1.12.x（1.12/1.12.1/1.12.2） | Forge 14.21+ | 0.3.13+ | 8（运行）/ 21（构建） |
 
 ## 构建
 
@@ -52,7 +52,7 @@ Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各�
 ./gradlew build
 ```
 
-构建产物位于 `versions/<mc>/build/libs/` 目录，命名统一为 `<modid>-<version>-<Loader>-<MC版本>.jar`（如 `death_muffler_fix-1.0.0-NeoForge-1.21.1.jar`，1.12.2 的 dev 版追加 `-dev` 后缀）。
+构建产物位于 `versions/<mc>/build/libs/` 目录，命名统一为 `<modid>-<version>-<Loader>-<MC版本>.jar`（如 `death_muffler_fix-1.0.0-NeoForge-1.21.1.jar`，1.12.2 的 dev 版追加 `-dev` 后缀）。1.12.2 产物（`death_muffler_fix-1.0.0-Forge-1.12.2.jar`）同样适用于 1.12 / 1.12.1。
 
 > 各版本 MUG jar（`mob_grinding_utils-0.3.13/1.1.0/1.1.10.jar`）不在仓库中，需从 [CurseForge - Mob Grinding Utils](https://www.curseforge.com/minecraft/mc-mods/mob-grinding-utils) 下载对应版本后放入根目录 `libs/` 文件夹。
 

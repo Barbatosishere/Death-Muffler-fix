@@ -9,7 +9,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- * 客户端处理器（Forge 1.12.2）。
+ * 客户端处理器（Forge 1.12.x）。
  *
  * MUG 0.3.13 原版 BossBarHidingEvent 按硬编码英文 Boss 名 "Wither" /
  * "Ender Dragon" 匹配，非英文环境（如中文）血条隐藏失效。本监听器

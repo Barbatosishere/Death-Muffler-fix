@@ -10,14 +10,14 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 |---|---|---|
 | 1.21.1 (NeoForge) | 1.1.10 | `BossBarHidingEvent` class was never compiled (only `.java` source shipped in the jar). Client initialization crashes with `NoClassDefFoundError` on startup. |
 | 1.20.1 (Forge) | 1.1.0 | `BossBarHidingEvent` exists but matches boss names with hardcoded English strings (`"Wither"`, `"Dragon"`). Boss bar hiding fails in non-English locales (e.g. Chinese). |
-| 1.12.2 (Forge) | 0.3.13 | Same hardcoded English name matching issue. Also uses exact `equals()` instead of `contains()`, so any custom boss name or translation breaks the match. |
+| 1.12.x (Forge) | 0.3.13 | Same hardcoded English name matching issue. Also uses exact `equals()` instead of `contains()`, so any custom boss name or translation breaks the match. |
 
 ## The Fix
 
 | MC Version | Approach |
 |---|---|
 | **1.21.1** | Ships a **shim class** (`mob_grinding_utils.events.BossBarHidingEvent`) compiled into this mod's jar, filling the missing bytecode in MUG 1.1.10. MUG's `doClientStuff()` then runs to completion — boss bar hiding, world unload cleanup, XP fluid render layers, and color handlers all work as originally intended. No Mixin or logic patching needed. |
-| **1.20.1 / 1.12.2** | Registers an additional event listener that uses Minecraft's **localization system** (`I18n`) to match boss names. This supplements MUG's existing listener (which remains active for its extra logic like Wither Crumbs detection), so there is no conflict. |
+| **1.20.1 / 1.12.x** | Registers an additional event listener that uses Minecraft's **localization system** (`I18n`) to match boss names. This supplements MUG's existing listener (which remains active for its extra logic like Wither Crumbs detection), so there is no conflict. |
 
 ## Features
 
@@ -33,7 +33,7 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 |---|---|---|---|
 | 1.21.1 | NeoForge 21.1.230+ | 1.1.10+ | 21 |
 | 1.20.1 | Forge 47.1.106+ | 1.1.0+ | 17 |
-| 1.12.2 | Forge 14.23.5.2847+ | 0.3.13+ | 8 |
+| 1.12.x (1.12/1.12.1/1.12.2) | Forge 14.21+ | 0.3.13+ | 8 |
 
 ## Notes
 
@@ -54,14 +54,14 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 |---|---|---|
 | 1.21.1（NeoForge） | 1.1.10 | `BossBarHidingEvent` 类从未被编译（jar 中仅附带了 `.java` 源文件）。客户端启动时执行到 `new BossBarHidingEvent()` 即抛出 `NoClassDefFoundError`，直接崩溃。 |
 | 1.20.1（Forge） | 1.1.0 | `BossBarHidingEvent` 类存在，但使用硬编码的英文字符串（`"Wither"`、`"Dragon"`）匹配 Boss 名称，非英文环境下（如中文）血条隐藏完全失效。 |
-| 1.12.2（Forge） | 0.3.13 | 同样的硬编码英文名匹配问题，且使用 `equals()` 精确匹配而非 `contains()` 包含匹配，任何自定义 Boss 名称或本地化翻译都会导致匹配失败。 |
+| 1.12.x（Forge） | 0.3.13 | 同样的硬编码英文名匹配问题，且使用 `equals()` 精确匹配而非 `contains()` 包含匹配，任何自定义 Boss 名称或本地化翻译都会导致匹配失败。 |
 
 ## 修复方案
 
 | MC 版本 | 方式 |
 |---|---|
 | **1.21.1** | 在本模组 jar 中编译了一份**同包同名 shim 类**（`mob_grinding_utils.events.BossBarHidingEvent`），补齐 MUG 1.1.10 中缺失的字节码。MUG 的 `doClientStuff()` 从此可以完整执行——Boss 血条隐藏、世界卸载清理、XP 流体渲染层、颜色处理器全部按原逻辑生效，无需 Mixin 或逻辑补偿。 |
-| **1.20.1 / 1.12.2** | 注册一个额外的事件监听器，使用 Minecraft 的**语言系统**（`I18n`）进行 Boss 名称匹配。该监听器与 MUG 原版监听器叠加共存（原版仍保留其额外逻辑，如 Wither Crumbs 检测），互不冲突。 |
+| **1.20.1 / 1.12.x** | 注册一个额外的事件监听器，使用 Minecraft 的**语言系统**（`I18n`）进行 Boss 名称匹配。该监听器与 MUG 原版监听器叠加共存（原版仍保留其额外逻辑，如 Wither Crumbs 检测），互不冲突。 |
 
 ## 功能特性
 
@@ -77,7 +77,7 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 |---|---|---|---|
 | 1.21.1 | NeoForge 21.1.230+ | 1.1.10+ | 21 |
 | 1.20.1 | Forge 47.1.106+ | 1.1.0+ | 17 |
-| 1.12.2 | Forge 14.23.5.2847+ | 0.3.13+ | 8 |
+| 1.12.x (1.12/1.12.1/1.12.2) | Forge 14.21+ | 0.3.13+ | 8 |
 
 ## 说明
 
