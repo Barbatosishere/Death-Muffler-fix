@@ -1,0 +1,25 @@
+// NeoForge 平台（1.21.1）：net.neoforged.moddev
+apply plugin: 'net.neoforged.moddev'
+
+neoForge {
+	version = neoforge_version
+	validateAccessTransformers = true
+
+	runs {
+		client {
+			client()
+		}
+		server {
+			server()
+		}
+		data {
+			data()
+		}
+	}
+
+	mods {
+		register(mod_id.toString()) {
+			sourceSet sourceSets.main
+		}
+	}
+}

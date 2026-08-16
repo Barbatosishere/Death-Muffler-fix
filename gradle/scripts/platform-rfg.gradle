@@ -1,0 +1,13 @@
+// Forge 1.12.2 平台：RetroFuturaGradle（参考 MoreFluxStorage）
+apply plugin: 'com.gtnewhorizons.retrofuturagradle'
+
+minecraft {
+	mcVersion = minecraft_version
+	username = 'Developer'
+}
+
+// 1.12.2 目标为 Java 8（RFG 默认），此处显式声明
+java {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}

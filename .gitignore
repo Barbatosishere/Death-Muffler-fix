@@ -20,11 +20,11 @@ hs_err_pid*
 # Common working directory
 run
 runs/
+versions/*/run/
 
 # Temp directories
 mgu_temp/
 i18n_temp/
-META-INF/
 
 # Compile-only libs
 libs/

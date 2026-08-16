@@ -1,0 +1,28 @@
+// Forge 1.20.1 平台：net.neoforged.moddev.legacyforge（参考 MoreFluxStorage）
+apply plugin: 'net.neoforged.moddev.legacyforge'
+
+legacyForge {
+	validateAccessTransformers = true
+
+	enable {
+		neoForgeVersion = neoforge_version
+	}
+
+	runs {
+		client {
+			client()
+		}
+		server {
+			server()
+		}
+		data {
+			data()
+		}
+	}
+
+	mods {
+		register(mod_id.toString()) {
+			sourceSet sourceSets.main
+		}
+	}
+}

@@ -1,0 +1,4 @@
+dependencies {
+    // MUG 1.1.0（Forge 1.20.1）：本地 libs/ 引入，modImplementation 自动处理 Forge 依赖重映射
+    modImplementation "mob_grinding_utils:mob_grinding_utils:1.1.0"
+}

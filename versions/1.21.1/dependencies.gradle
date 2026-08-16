@@ -1,0 +1,6 @@
+dependencies {
+    // MUG 1.1.10（NeoForge 1.21.1）：本地 libs/ 引入，编译期依赖
+    implementation "mob_grinding_utils:mob_grinding_utils:1.1.10"
+    // Mixin 注解处理器（生成 refmap）
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+}
