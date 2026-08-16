@@ -21,7 +21,7 @@
       },
       {
         "modid": "mob_grinding_utils",
-        "mandatory": false,
+        "mandatory": true,
         "versionRange": "[0.3.13,)",
         "ordering": "NONE",
         "side": "CLIENT"

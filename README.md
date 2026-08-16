@@ -6,7 +6,7 @@
 
 Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各版本存在不同问题：
 
-- **1.21.1（MUG 1.1.10）**：`BossBarHidingEvent` 类构建缺失（jar 中只有 .java 没有 .class），功能直接失效。本模组通过 Mixin 跳过 `doClientStuff` 中缺失类的注册（其余客户端功能保留），并改用事件监听重新实现血条隐藏。
+- **1.21.1（MUG 1.1.10）**：`BossBarHidingEvent` 类构建缺失（jar 中只有 .java 没有 .class），客户端初始化即崩溃。本模组将缺失类以同包同名 shim 的形式编译进自身 jar 补齐字节码，MGU 的 `doClientStuff()` 完整执行（血条隐藏、worldUnload、XP 流体渲染层、颜色处理器全部按原逻辑生效）。
 - **1.20.1（MUG 1.1.0）**：原生功能可用，但按硬编码英文 Boss 名匹配，非英文环境失效。本模组提供语言系统名称匹配的增强实现。
 - **1.12.2（MUG 0.3.13）**：原生功能可用，但同样按硬编码英文 Boss 名匹配，非英文环境失效。本模组提供语言系统名称匹配的增强实现（与原版监听叠加）。
 

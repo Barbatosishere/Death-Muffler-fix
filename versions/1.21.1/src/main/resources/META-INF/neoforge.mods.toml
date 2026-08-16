@@ -9,7 +9,7 @@ displayName = "Death Muffler fix"
 logoFile = "logo.png"
 credits = "Barbatosishere"
 authors = "Barbatosishere"
-description = "修复实用设备消声机的Boss血条隐藏逻辑（改用语言系统名称匹配）"
+description = "修复实用设备消声机的Boss血条隐藏逻辑（补齐缺失的BossBarHidingEvent类）"
 
 [[dependencies.death_muffler_fix]]
 modId = "neoforge"
@@ -20,11 +20,7 @@ side = "BOTH"
 
 [[dependencies.death_muffler_fix]]
 modId = "mob_grinding_utils"
-type = "optional"
+type = "required"
 versionRange = "[1.1.10,)"
 ordering = "NONE"
 side = "CLIENT"
-
-[[mixins]]
-config = "death_muffler_fix.mixins.json"
-

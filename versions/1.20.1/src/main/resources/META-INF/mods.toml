@@ -13,14 +13,14 @@ description = "修复实用设备消声机的Boss血条隐藏逻辑（改用语�
 
 [[dependencies.death_muffler_fix]]
 modId = "forge"
-type = "required"
+mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.death_muffler_fix]]
 modId = "mob_grinding_utils"
-type = "optional"
+mandatory = true
 versionRange = "[1.1.0,)"
 ordering = "NONE"
 side = "CLIENT"
