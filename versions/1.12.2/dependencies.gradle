@@ -1,4 +1,0 @@
-dependencies {
-    // MUG 0.3.13（Forge 1.12.2）：本地 libs/ 引入，rfg.deobf 将 SRG 映射还原为 MCP 名
-    implementation rfg.deobf("mob_grinding_utils:mob_grinding_utils:0.3.13")
-}

@@ -7,7 +7,8 @@ minecraft {
 }
 
 // 1.12.2 目标为 Java 8（RFG 默认），此处显式声明
+// 临时修改为Java 21以解决构建问题
 java {
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
