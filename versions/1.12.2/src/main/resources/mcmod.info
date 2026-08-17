@@ -2,7 +2,7 @@
   {
     "modid": "death_muffler_fix",
     "name": "Death Muffler fix",
-    "description": "修复实用设备消声机的Boss血条隐藏逻辑（1.12.2 兼容入口）",
+    "description": "修复实用设备消声机的Boss血条隐藏逻辑（1.12.x 兼容入口）",
     "version": "1.0.0",
     "mcversion": "1.12.x",
     "url": "",
@@ -12,20 +12,7 @@
     "logoFile": "logo.png",
     "screenshots": [],
     "dependencies": [
-      {
-        "modid": "forge",
-        "mandatory": true,
-        "versionRange": "[14.21,)",
-        "ordering": "NONE",
-        "side": "BOTH"
-      },
-      {
-        "modid": "mob_grinding_utils",
-        "mandatory": true,
-        "versionRange": "[0.3.13,)",
-        "ordering": "NONE",
-        "side": "CLIENT"
-      }
+      "mob_grinding_utils@[0.3.13,)"
     ]
   }
 ]
