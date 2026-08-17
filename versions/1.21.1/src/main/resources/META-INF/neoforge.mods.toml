@@ -24,3 +24,6 @@ type = "required"
 versionRange = "[1.1.10,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[mixins]]
+config = "death_muffler_fix.mixins.json"
