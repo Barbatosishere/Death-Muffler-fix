@@ -31,7 +31,7 @@ import java.lang.reflect.Field;
  *
  * 注意：不能采用同包同名 shim 补类方案，NeoForge 1.21.1 的 JPMS 模块层
  * 禁止多个 mod jar 导出同一包（ResolutionException: ... export package
- * mob_grinding_utils.events），实测启动即崩。故采用 Miixin 方案。
+ * mob_grinding_utils.events），实测启动即崩。故采用 Mixin 方案。
  */
 @Mod("death_muffler_fix")
 public final class Death_muffler_fix {
