@@ -5,8 +5,7 @@ plugins {
     java
     `java-library`
     `maven-publish`
-    // 各平台插件按需启用（通过 gradle/scripts/platform-*.gradle 应用）
-    id("com.gtnewhorizons.retrofuturagradle") version "2.0.2" apply false
+    // 各平台插件按需启用（通过 gradle/scripts/platform-*.gradle 应用）：NeoForge ModDev + LegacyForge
     id("net.neoforged.moddev") version "2.0.140" apply false
     id("net.neoforged.moddev.legacyforge") version "2.0.140" apply false
 }
@@ -14,9 +13,7 @@ plugins {
 // 平台由 versions/<mc>/gradle.properties 的 platform 属性决定：
 //   neoforge     -> 新版 NeoForge（1.21.1）
 //   legacyforge  -> NeoForge ModDev LegacyForge（Forge 1.20.1）
-//   rfg          -> RetroFuturaGradle（Forge 1.12.2）
-val currentPlatform = (findProperty("platform") ?: "rfg").toString()
-val isRfg = currentPlatform == "rfg"
+val currentPlatform = (findProperty("platform") ?: "neoforge").toString()
 
 // Loader 标签（用于产物命名）：neoforge -> NeoForge，forge -> Forge
 val loaderLabel = when ((findProperty("mod_loader") ?: "forge").toString().lowercase()) {
@@ -30,7 +27,7 @@ base {
 
 java {
     toolchain {
-        val javaVersion = if (isRfg) "21" else (findProperty("java_version")?.toString() ?: "21")
+        val javaVersion = findProperty("java_version")?.toString() ?: "21"
         languageVersion = JavaLanguageVersion.of(javaVersion)
     }
 }
@@ -74,8 +71,7 @@ repositories {
 when (currentPlatform) {
     "neoforge" -> apply(from = rootProject.file("gradle/scripts/platform-neoforge.gradle"))
     "legacyforge" -> apply(from = rootProject.file("gradle/scripts/platform-legacyforge.gradle"))
-    "rfg" -> apply(from = rootProject.file("gradle/scripts/platform-rfg.gradle"))
-    else -> throw GradleException("Unknown platform: $currentPlatform")
+    else -> throw GradleException("Unknown platform: $currentPlatform (expected neoforge or legacyforge)")
 }
 
 // ---- 版本专属依赖：versions/<mc>/dependencies.gradle，不存在则回退根目录 ----
@@ -87,7 +83,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 // 统一产物命名：<modid>-<version>-<Loader>-<MC版本>.jar（classifier 如 dev 自动追加后缀）
-// 用 AbstractArchiveTask 而非 Jar：RFG(1.12.2) 的 jar 任务不是标准 Jar 类型
+// 用 AbstractArchiveTask 而非 Jar：LegacyForge 的 jar 任务不是标准 Jar 类型
 tasks.withType<AbstractArchiveTask>().configureEach {
     val mv = (findProperty("mod_version") ?: "1.0.0").toString()
     val mc = (findProperty("minecraft_version") ?: "unknown").toString()

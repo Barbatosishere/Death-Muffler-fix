@@ -6,9 +6,8 @@
 
 Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各版本存在不同问题：
 
-- **1.21.1（MUG 1.1.10）**：`BossBarHidingEvent` 类构建缺失（jar 中只有 .java 没有 .class），客户端初始化即崩溃。本模组采用 **shim 补类方案**：在 `mob_grinding_utils.events` 包下提供同名的 `BossBarHidingEvent` 编译版本，补全MGU缺失的类文件，实现最简单的修复。
+- **1.21.1（MUG 1.1.10）**：`BossBarHidingEvent` 类构建缺失（jar 中只有 .java 没有 .class），客户端初始化即崩溃。本模组通过 Mixin 在缺失类实例化前终止 `doClientStuff()`（前段事件注册不受影响），补注册被跳过的 XP 流体渲染层、颜色处理器与 worldUnload 缓存补偿，血条隐藏由事件监听按语言系统重新实现。
 - **1.20.1（MUG 1.1.0）**：原生功能可用，但按硬编码英文 Boss 名匹配，非英文环境失效。本模组提供语言系统名称匹配的增强实现。
-- **1.12.x（MUG 0.3.13）**：原生功能可用，但同样按硬编码英文 Boss 名匹配，非英文环境失效。本模组提供语言系统名称匹配的增强实现（与原版监听叠加）。
 
 ## 功能特性
 
@@ -21,15 +20,13 @@ Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各�
 ```
 ├── build.gradle.kts          # Stonecutter 中央脚本（按 platform 属性分发）
 ├── stonecutter.gradle.kts    # 当前激活版本（stonecutter.active）
-├── settings.gradle.kts       # Stonecutter 版本声明（1.12.2 / 1.20.1 / 1.21.1）
+├── settings.gradle.kts       # Stonecutter 版本声明（1.20.1 / 1.21.1）
 ├── gradle/scripts/           # 平台配置脚本
-│   ├── platform-rfg.gradle          # 1.12.2  RetroFuturaGradle
 │   ├── platform-legacyforge.gradle  # 1.20.1  NeoForge ModDev LegacyForge
 │   └── platform-neoforge.gradle     # 1.21.1  NeoForge ModDev
 ├── src/main/resources/       # 共享资源（logo.png、lang 等，Stonecutter 自动合并）
 ├── libs/                     # 各版本 MUG jar（flatDir 本地依赖）
 └── versions/
-    ├── 1.12.2/               # platform=rfg，Java 21 编译 / Java 8 目标（构建工具链 1.12.2，产物兼容整个 1.12.x）
     ├── 1.20.1/               # platform=legacyforge，Java 17
     └── 1.21.1/               # platform=neoforge，Java 21
 ```
@@ -40,23 +37,20 @@ Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各�
 |------|--------|-----|------|
 | 1.21.1 | NeoForge 21.1.230+ | 1.1.10+ | 21 |
 | 1.20.1 | Forge 47.1.106+ | 1.1.0+ | 17 |
-| 1.12.x（1.12/1.12.1/1.12.2） | Forge 14.21+ | 0.3.13+ | 8（运行）/ 21（构建） |
 
 ## 构建
 
 ```bash
 # 切换版本（默认激活 1.21.1）
-./gradlew stonecutterSwitchTo1.21.1   # 或 stonecutterSwitchTo1.20.1 / stonecutterSwitchTo1.12.2
+./gradlew stonecutterSwitchTo1.21.1   # 或 stonecutterSwitchTo1.20.1
 
 # 构建当前激活版本
 ./gradlew build
 ```
 
-构建产物位于 `versions/<mc>/build/libs/` 目录，命名统一为 `<modid>-<version>-<Loader>-<MC版本>.jar`（如 `death_muffler_fix-1.0.0-NeoForge-1.21.1.jar`，1.12.2 的 dev 版追加 `-dev` 后缀）。1.12.2 产物（`death_muffler_fix-1.0.0-Forge-1.12.2.jar`）同样适用于 1.12 / 1.12.1。
+构建产物位于 `versions/<mc>/build/libs/` 目录，命名统一为 `<modid>-<version>-<Loader>-<MC版本>.jar`（如 `death_muffler_fix-1.0.0-NeoForge-1.21.1.jar`）。
 
-> 各版本 MUG jar（`mob_grinding_utils-0.3.13/1.1.0/1.1.10.jar`）不在仓库中，需从 [CurseForge - Mob Grinding Utils](https://www.curseforge.com/minecraft/mc-mods/mob-grinding-utils) 下载对应版本后放入根目录 `libs/` 文件夹。
-
-> 注意：1.12.2 使用 RetroFuturaGradle，需要 JDK 8（Minecraft 运行目标）与 JDK 21/25（构建工具链）。本地 JDK 路径在根 `gradle.properties` 的 `org.gradle.java.installations.paths` 中配置。
+> 各版本 MUG jar（`mob_grinding_utils-1.1.0/1.1.10.jar`）不在仓库中，需从 [CurseForge - Mob Grinding Utils](https://www.curseforge.com/minecraft/mc-mods/mob-grinding-utils) 下载对应版本后放入根目录 `libs/` 文件夹。
 
 ## 安装
 

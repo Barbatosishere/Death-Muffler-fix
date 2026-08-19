@@ -1,13 +1,5 @@
 pluginManagement {
     repositories {
-        // GTNH Maven：RetroFuturaGradle 插件（1.12.2 平台）
-        maven("https://nexus.gtnewhorizons.com/repository/public/") {
-            name = "GTNH Maven"
-            content {
-                includeGroup("com.gtnewhorizons")
-                includeGroup("com.gtnewhorizons.retrofuturagradle")
-            }
-        }
         // KikuGie：Stonecutter 插件
         maven("https://maven.kikugie.dev/releases") {
             name = "KikuGie Releases"

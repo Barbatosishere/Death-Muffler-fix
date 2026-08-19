@@ -19,14 +19,10 @@ All notable changes to Death Muffler Fix will be documented in this file.
 - **1.20.1 (Forge)**: Fixed dependency declaration — changed `type = "optional"` to `mandatory = true` in `mods.toml`. The original `type` field is not recognized by Forge 1.20.1's TOML parser (required field: `mandatory`), which caused the mod to be rejected as an invalid mod file entirely.
   - Also fixed the `forge` dependency entry to use the correct `mandatory = true` syntax.
 
-- **1.12.x (Forge)**: Fixed dependency declaration — changed `mandatory = false` to `mandatory = true` for Mob Grinding Utils in `mcmod.info`. `ClientHandler` directly imports MUG capability classes and will throw `NoClassDefFoundError` on any boss bar render event if MUG is absent.
-
-- **1.12.x (Forge)**: Declared compatibility with the whole Minecraft 1.12.x family (1.12 / 1.12.1 / 1.12.2): added `acceptedMinecraftVersions = "[1.12,1.13)"` to the `@Mod` annotation, relaxed the Forge dependency range from `[14.23.5.2847,)` to `[14.21,)`, and set `mcversion` to `1.12.x`. Upstream MUG 0.3.13 is itself built against 1.12.2 and works across the family the same way; the build toolchain remains 1.12.2 (RFG limitation, bytecode-compatible).
-
 - **All versions**: Added missing `pack.mcmeta` resource pack metadata.
   - Without `pack.mcmeta`, Forge 1.20.1 marks the mod's resource pack as broken and discards its resources (logo image fails to load; a warning is logged).
   - NeoForge 1.21.1 auto-generates default metadata, so this was non-critical there, but added for consistency.
-  - Pack formats: 1.12.x → `3`, 1.20.1 → `15`, 1.21.1 → `34`.
+  - Pack formats: 1.20.1 → `15`, 1.21.1 → `34`.
 
 #### Changed
 
@@ -47,14 +43,10 @@ All notable changes to Death Muffler Fix will be documented in this file.
 - **1.20.1（Forge）**：修复依赖声明——在 `mods.toml` 中将 `type = "optional"` 改为 `mandatory = true`。Forge 1.20.1 的 TOML 解析器不识别 `type` 字段（必需字段为 `mandatory`），导致模组被标记为无效文件、完全无法加载。
   - 同时修正了 `forge` 依赖条目，使用正确的 `mandatory = true` 语法。
 
-- **1.12.x（Forge）**：修复依赖声明——在 `mcmod.info` 中将 Mob Grinding Utils 的 `mandatory` 从 `false` 改为 `true`。`ClientHandler` 直接引用 MUG 能力类，未安装 MUG 时任何 Boss 血条渲染事件都会抛出 `NoClassDefFoundError`。
-
-- **1.12.x（Forge）**：声明兼容整个 Minecraft 1.12.x 系列（1.12 / 1.12.1 / 1.12.2）：`@Mod` 注解添加 `acceptedMinecraftVersions = "[1.12,1.13)"`，Forge 依赖范围从 `[14.23.5.2847,)` 放宽为 `[14.21,)`，`mcversion` 改为 `1.12.x`。上游 MUG 0.3.13 本身也是基于 1.12.2 构建并跨系列工作的；构建工具链保持 1.12.2（RFG 限制，字节码兼容）。
-
 - **全版本**：补充缺失的 `pack.mcmeta` 资源包元数据文件。
   - 缺少 `pack.mcmeta` 时，Forge 1.20.1 会将模组的资源包标记为损坏并丢弃其资源（logo 图片无法加载，日志输出警告）。
   - NeoForge 1.21.1 会自动生成默认元数据，因此影响不大，但为一致性也一并添加。
-  - Pack format：1.12.x → `3`，1.20.1 → `15`，1.21.1 → `34`。
+  - Pack format：1.20.1 → `15`，1.21.1 → `34`。
 
 #### 变更
 

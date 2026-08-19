@@ -4,20 +4,19 @@ A client-side fix for the **Death Muffler** (Boss bar hiding) feature in [Mob Gr
 
 ## The Problem
 
-Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon boss bars when the player has the corresponding muffler upgrades installed. However, this feature is broken across all supported versions:
+Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon boss bars when the player has the corresponding muffler upgrades installed. However, this feature is broken across versions:
 
 | MC Version | MUG Version | Issue |
 |---|---|---|
 | 1.21.1 (NeoForge) | 1.1.10 | `BossBarHidingEvent` class was never compiled (only `.java` source shipped in the jar). Client initialization crashes with `NoClassDefFoundError` on startup. |
 | 1.20.1 (Forge) | 1.1.0 | `BossBarHidingEvent` exists but matches boss names with hardcoded English strings (`"Wither"`, `"Dragon"`). Boss bar hiding fails in non-English locales (e.g. Chinese). |
-| 1.12.x (Forge) | 0.3.13 | Same hardcoded English name matching issue. Also uses exact `equals()` instead of `contains()`, so any custom boss name or translation breaks the match. |
 
 ## The Fix
 
 | MC Version | Approach |
 |---|---|
-| **1.21.1** | Uses a **Mixin** to cancel `doClientStuff()` right before the `new BossBarHidingEvent()` instruction (the 3 event registrations before it are unaffected), then re-registers the skipped tail logic (XP fluid render layers, color handlers, `worldUnload` damage-cache invalidation via reflection) and reimplements boss bar hiding with a language-aware listener. (A same-package shim class was attempted first, but NeoForge 1.21.1's JPMS module layer rejects split packages between mods.) |
-| **1.20.1 / 1.12.x** | Registers an additional event listener that uses Minecraft's **localization system** (`I18n`) to match boss names. This supplements MUG's existing listener (which remains active for its extra logic like Wither Crumbs detection), so there is no conflict. |
+| **1.21.1** | Uses a **Mixin** to cancel `doClientStuff()` right before the `new BossBarHidingEvent()` instruction (the event registrations before it are unaffected), then re-registers the skipped tail logic (XP fluid render layers, color handlers, `worldUnload` damage-cache invalidation via reflection) and reimplements boss bar hiding with a language-aware listener. (A same-package shim class was attempted first, but NeoForge 1.21.1's JPMS module layer rejects split packages between mods.) |
+| **1.20.1** | Registers an additional event listener that uses Minecraft's **localization system** (`I18n`) to match boss names. This supplements MUG's existing listener (which remains active for its extra logic like Wither Crumbs detection), so there is no conflict. |
 
 ## Features
 
@@ -33,7 +32,6 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 |---|---|---|---|
 | 1.21.1 | NeoForge 21.1.230+ | 1.1.10+ | 21 |
 | 1.20.1 | Forge 47.1.106+ | 1.1.0+ | 17 |
-| 1.12.x (1.12/1.12.1/1.12.2) | Forge 14.21+ | 0.3.13+ | 8 |
 
 ## Notes
 
@@ -54,14 +52,13 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 |---|---|---|
 | 1.21.1（NeoForge） | 1.1.10 | `BossBarHidingEvent` 类从未被编译（jar 中仅附带了 `.java` 源文件）。客户端启动时执行到 `new BossBarHidingEvent()` 即抛出 `NoClassDefFoundError`，直接崩溃。 |
 | 1.20.1（Forge） | 1.1.0 | `BossBarHidingEvent` 类存在，但使用硬编码的英文字符串（`"Wither"`、`"Dragon"`）匹配 Boss 名称，非英文环境下（如中文）血条隐藏完全失效。 |
-| 1.12.x（Forge） | 0.3.13 | 同样的硬编码英文名匹配问题，且使用 `equals()` 精确匹配而非 `contains()` 包含匹配，任何自定义 Boss 名称或本地化翻译都会导致匹配失败。 |
 
 ## 修复方案
 
 | MC 版本 | 方式 |
 |---|---|
-| **1.21.1** | 通过 **Mixin** 在 `new BossBarHidingEvent()` 指令前终止 `doClientStuff()`（其前段 3 个事件注册不受影响），随后补注册被跳过的尾部逻辑（XP 流体渲染层、颜色处理器、经反射实现的 `worldUnload` 伤害缓存失效），并以语言感知的监听器重新实现血条隐藏。（最初尝试同包同名 shim 补类，但 NeoForge 1.21.1 的 JPMS 模块层禁止模组间拆分包而无法采用。） |
-| **1.20.1 / 1.12.x** | 注册一个额外的事件监听器，使用 Minecraft 的**语言系统**（`I18n`）进行 Boss 名称匹配。该监听器与 MUG 原版监听器叠加共存（原版仍保留其额外逻辑，如 Wither Crumbs 检测），互不冲突。 |
+| **1.21.1** | 通过 **Mixin** 在 `new BossBarHidingEvent()` 指令前终止 `doClientStuff()`（其前段事件注册不受影响），随后补注册被跳过的尾部逻辑（XP 流体渲染层、颜色处理器、经反射实现的 `worldUnload` 伤害缓存失效），并以语言感知的监听器重新实现血条隐藏。（最初尝试同包同名 shim 补类，但 NeoForge 1.21.1 的 JPMS 模块层禁止模组间拆分包而无法采用。） |
+| **1.20.1** | 注册一个额外的事件监听器，使用 Minecraft 的**语言系统**（`I18n`）进行 Boss 名称匹配。该监听器与 MUG 原版监听器叠加共存（原版仍保留其额外逻辑，如 Wither Crumbs 检测），互不冲突。 |
 
 ## 功能特性
 
@@ -77,7 +74,6 @@ Mob Grinding Utils' Death Muffler is supposed to hide Wither and Ender Dragon bo
 |---|---|---|---|
 | 1.21.1 | NeoForge 21.1.230+ | 1.1.10+ | 21 |
 | 1.20.1 | Forge 47.1.106+ | 1.1.0+ | 17 |
-| 1.12.x (1.12/1.12.1/1.12.2) | Forge 14.21+ | 0.3.13+ | 8 |
 
 ## 说明
 
