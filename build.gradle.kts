@@ -40,11 +40,12 @@ repositories {
         name = "BMCLAPI NeoForge"
         url = uri("https://bmclapi2.bangbang93.com/maven/neoforged/")
     }
-    mavenCentral()
+    // 阿里云镜像（Maven Central 缓存镜像）优先，避免 mavenCentral 直连超时（国内网络）
     maven {
         name = "Aliyun"
         url = uri("https://maven.aliyun.com/repository/public")
     }
+    mavenCentral()
     // NeoForged 镜像优先：maven.neoforged.net 直连 SSL 握手不稳定（国内网络必失败）
     maven {
         name = "NeoForged Mirror"
