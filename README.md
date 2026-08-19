@@ -48,7 +48,7 @@ Mob Grinding Utils 的消声器（Death Muffler）Boss 血条隐藏功能在各�
 ./gradlew build
 ```
 
-构建产物位于 `versions/<mc>/build/libs/` 目录，命名统一为 `<modid>-<version>-<Loader>-<MC版本>.jar`（如 `death_muffler_fix-1.0.0-NeoForge-1.21.1.jar`）。
+构建产物位于 `versions/<mc>/build/libs/` 目录，命名统一为 `<modid>-<version>-<Loader>-<MC版本>.jar`（如 `death_muffler_fix-1.0.1-NeoForge-1.21.1.jar`）。
 
 > 各版本 MUG jar（`mob_grinding_utils-1.1.0/1.1.10.jar`）不在仓库中，需从 [CurseForge - Mob Grinding Utils](https://www.curseforge.com/minecraft/mc-mods/mob-grinding-utils) 下载对应版本后放入根目录 `libs/` 文件夹。
 

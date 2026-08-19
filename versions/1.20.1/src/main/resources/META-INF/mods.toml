@@ -4,7 +4,7 @@ license = "GPL-3.0"
 
 [[mods]]
 modId = "death_muffler_fix"
-version = "1.0.0"
+version = "1.0.1"
 displayName = "Death Muffler fix"
 logoFile = "logo.png"
 credits = "Barbatosishere"
